@@ -8,6 +8,7 @@
     "start": "node ./slave.js"
   },
   "dependencies": {
+    "bunyan": "^1.8.12",
     "express": "4.16.4",
     "ip": "1.1.5",
     "sprintf-js": "1.1.2",
