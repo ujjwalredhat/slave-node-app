@@ -25,7 +25,7 @@ var counter = 0;
 app.get('/', (request, response) => response.send('.. slave is running'));
 
 app.get('/ip', (request, response) => {
-  var messageText = ip.address() + "*****";
+  var messageText = ip.address();
   counter++;
   log.info({app: 'slave', phase: 'operational', id: id, counter: counter, slave_ip: ip.address()}, " responded .... " + counter);
   response.json(messageText);
