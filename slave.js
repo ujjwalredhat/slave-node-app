@@ -19,7 +19,7 @@ var log = bunyan.createLogger({
   });
 
 var targePort = process.env.NODE_APP_SLAVE_SERVICE_PORT;
-//var targePort = properties.get('slave.node.targetPort');
+//var targePort = properties.get('slave.node.targetPort'); 
 
 const port = targePort;
 var counter = 0;
