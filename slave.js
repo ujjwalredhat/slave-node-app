@@ -23,10 +23,10 @@ var targePort = process.env.NODE_APP_SLAVE_SERVICE_PORT;
 
 const port = targePort;
 var counter = 0;
-var kill_switch = 0;
+var ignore_switch = 0;
 
 app.get('/', (request, response) => {
-  if (kill_switch == 0) {
+  if (ignore_switch == 0) {
     var millis = Date.now() - start;
 
     response.send('.. slave running for ' + (millis / 1000) + ' seconds');
@@ -39,11 +39,11 @@ app.get('/ip', (request, response) => {
   response.json(messageText);
 });
 
-app.get('/kill', (request, response) => {
-  var messageText = " Kill switch activated";
+app.get('/ignore', (request, response) => {
+  var messageText = " ignore switch activated";
   counter++;
-  log.info({app: 'slave', phase: 'operational', id: id, counter: counter, slave_ip: ip.address()}, " Kill switch activated");
-  kill_switch++;
+  log.info({app: 'slave', phase: 'operational', id: id, counter: counter, slave_ip: ip.address()}, " ignore switch activated");
+  ignore_switch++;
   response.json(messageText);
 });
 
