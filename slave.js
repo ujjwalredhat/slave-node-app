@@ -25,12 +25,17 @@ const port = targePort;
 var counter = 0;
 var ignore_switch = 0;
 
+app.get('/', (request, response) => {
+  response.send('.. ');
+});
+
 app.get('/health', (request, response) => {
   if (ignore_switch == 0) {
     var millis = Date.now() - start;
 
     response.send('.. slave running for ' + (millis / 1000) + ' seconds');
-  }});
+  }
+});
 
 app.get('/ip', (request, response) => {
   if (ignore_switch == 0) {
@@ -38,7 +43,8 @@ app.get('/ip', (request, response) => {
     counter++;
     log.info({app: 'slave', phase: 'operational', id: id, counter: counter, slave_ip: ip.address()}, " responded .... " + counter);
     response.json(messageText);
-  }});
+  }
+});
 
 app.get('/ignore', (request, response) => {
   var messageText = " ignore switch activated";
