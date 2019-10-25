@@ -9,6 +9,8 @@ const id = uuid.v1()
 //var PropertiesReader = require('properties-reader');
 //var properties = PropertiesReader('../application.properties');
 
+var start = Date.now();
+
 var log = bunyan.createLogger({
       name: "Slave",
       streams: [{
@@ -25,7 +27,9 @@ var kill_switch = 0;
 
 app.get('/', (request, response) => {
   if (kill_switch == 0) {
-    response.send('.. slave is running')
+    var millis = Date.now() - start;
+
+    response.send('.. slave running for ' + (millis / 1000) + ' seconds');
   }});
 
 app.get('/ip', (request, response) => {
@@ -36,9 +40,9 @@ app.get('/ip', (request, response) => {
 });
 
 app.get('/kill', (request, response) => {
-  var messageText = ip.address();
+  var messageText = " Kill switch activated";
   counter++;
-  log.info({app: 'slave', phase: 'operational', id: id, counter: counter, slave_ip: ip.address()}, " Kill switch activated" + counter);
+  log.info({app: 'slave', phase: 'operational', id: id, counter: counter, slave_ip: ip.address()}, " Kill switch activated");
   kill_switch++;
   response.json(messageText);
 });
