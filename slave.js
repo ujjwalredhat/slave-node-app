@@ -21,13 +21,25 @@ var targePort = process.env.NODE_APP_SLAVE_SERVICE_PORT;
 
 const port = targePort;
 var counter = 0;
+var kill_switch = 0;
 
-app.get('/', (request, response) => response.send('.. slave is running'));
+app.get('/', (request, response) => {
+  if (kill_switch == 0) {
+    response.send('.. slave is running')
+  }});
 
 app.get('/ip', (request, response) => {
   var messageText = ip.address();
   counter++;
   log.info({app: 'slave', phase: 'operational', id: id, counter: counter, slave_ip: ip.address()}, " responded .... " + counter);
+  response.json(messageText);
+});
+
+app.get('/kill', (request, response) => {
+  var messageText = ip.address();
+  counter++;
+  log.info({app: 'slave', phase: 'operational', id: id, counter: counter, slave_ip: ip.address()}, " Kill switch activated" + counter);
+  kill_switch++;
   response.json(messageText);
 });
 
