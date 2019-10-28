@@ -47,10 +47,18 @@ app.get('/ip', (request, response) => {
 });
 
 app.get('/ignore', (request, response) => {
-  var messageText = " ignore switch activated";
+  var messageText = ip.address() + " ignore switch activated";
   counter++;
   log.info({app: 'slave', phase: 'operational', id: id, counter: counter, slave_ip: ip.address()}, " ignore switch activated");
   ignore_switch++;
+  response.json(messageText);
+});
+
+app.get('/restore', (request, response) => {
+  var messageText = ip.address() + " restore switch activated";
+  counter++;
+  log.info({app: 'slave', phase: 'operational', id: id, counter: counter, slave_ip: ip.address()}, " restore switch activated");
+  ignore_switch--;
   response.json(messageText);
 });
 
