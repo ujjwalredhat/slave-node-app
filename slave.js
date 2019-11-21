@@ -6,9 +6,6 @@ var bunyan = require('bunyan');
 const uuid = require('uuid')
 const id = uuid.v1()
 
-//var PropertiesReader = require('properties-reader');
-//var properties = PropertiesReader('../application.properties');
-
 var start = Date.now();
 
 var log = bunyan.createLogger({
@@ -18,8 +15,12 @@ var log = bunyan.createLogger({
     }]
   });
 
-var targePort = process.env.NODE_APP_SLAVE_SERVICE_PORT;
-//var targePort = properties.get('slave.node.targetPort'); 
+var targetPort;  
+targetPort = process.env.NODE_APP_SLAVE_SERVICE_PORT;
+log.info({app: 'slave', phase: 'setup' }, `targetPort  ${targetPort}`);
+if (targetPort === undefined) {
+  targePort = process.env.NODE_APP_SLAVE_APP_SERVICE_PORT;
+}
 
 const port = targePort;
 var counter = 0;
@@ -33,7 +34,7 @@ app.get('/health', (request, response) => {
   if (ignore_switch == 0) {
     var millis = Date.now() - start;
 
-    response.send('.. slave running for ' + (millis / 1000) + ' seconds');
+    response.send('..  Slave has been running for ' + (millis / 1000) + ' seconds');
   }
 });
 
@@ -49,7 +50,7 @@ app.get('/ip', (request, response) => {
 app.get('/ignore', (request, response) => {
   var messageText = ip.address() + " ignore switch activated";
   counter++;
-  log.info({app: 'slave', phase: 'operational', id: id, counter: counter, slave_ip: ip.address()}, " ignore switch activated");
+  log.info({app: 'slave', phase: 'service', id: id, counter: counter, slave_ip: ip.address()}, " ignore switch activated");
   ignore_switch++;
   response.json(messageText);
 });
@@ -57,7 +58,7 @@ app.get('/ignore', (request, response) => {
 app.get('/restore', (request, response) => {
   var messageText = ip.address() + " restore switch activated";
   counter++;
-  log.info({app: 'slave', phase: 'operational', id: id, counter: counter, slave_ip: ip.address()}, " restore switch activated");
+  log.info({app: 'slave', phase: 'service', id: id, counter: counter, slave_ip: ip.address()}, " restore switch activated");
   ignore_switch--;
   response.json(messageText);
 });
