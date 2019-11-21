@@ -22,7 +22,7 @@ if (targetPort === undefined) {
   targePort = process.env.NODE_APP_SLAVE_APP_SERVICE_PORT;
 }
 
-const port = targePort;
+const port = targetPort;
 var counter = 0;
 var ignore_switch = 0;
 
