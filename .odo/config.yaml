@@ -7,7 +7,7 @@ ComponentSettings:
   Ports:
   - 8080/TCP
   Application: app
-  Project: slave-odo
+  Project: master-slave-odo
   Name: node-app-slave
   Url:
   - Name: node-app-slave

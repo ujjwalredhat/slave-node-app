@@ -19,7 +19,7 @@ var targetPort;
 targetPort = process.env.NODE_APP_SLAVE_SERVICE_PORT;
 log.info({app: 'slave', phase: 'setup' }, `targetPort  ${targetPort}`);
 if (targetPort === undefined) {
-  targePort = process.env.NODE_APP_SLAVE_APP_SERVICE_PORT;
+  targetPort = process.env.NODE_APP_SLAVE_APP_SERVICE_PORT;
 }
 
 const port = targetPort;
@@ -34,7 +34,7 @@ app.get('/health', (request, response) => {
   if (ignore_switch == 0) {
     var millis = Date.now() - start;
 
-    response.send('..  Slave has been running for ' + (millis / 1000) + ' seconds');
+    response.send('..  Slave uptime: ' + (millis / 1000) + ' seconds');
   }
 });
 
