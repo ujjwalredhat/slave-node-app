@@ -34,7 +34,7 @@ app.get('/health', (request, response) => {
   if (ignore_switch == 0) {
     var millis = Date.now() - start;
 
-    response.send('..  Slave uptime: ' + (millis / 1000) + ' seconds');
+    response.send('..  The slave has been running for ' + (millis / 1000) + ' seconds');
   }
 });
 
