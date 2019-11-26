@@ -27,7 +27,7 @@ var counter = 0;
 var ignore_switch = 0;
 
 app.get('/', (request, response) => {
-  response.send('.. ');
+  response.send('Hello - this is the simple slave REST interface');
 });
 
 app.get('/health', (request, response) => {
@@ -50,16 +50,20 @@ app.get('/ip', (request, response) => {
 app.get('/ignore', (request, response) => {
   var messageText = ip.address() + " ignore switch activated";
   counter++;
-  log.info({app: 'slave', phase: 'service', id: id, counter: counter, slave_ip: ip.address()}, " ignore switch activated");
-  ignore_switch++;
+  log.info({app: 'slave', phase: 'probe management', slave_ip: ip.address()}, " ignore switch activated");
+  if (ignore_switch == 0) {
+    ignore_switch = 1;
+  }
   response.json(messageText);
 });
 
 app.get('/restore', (request, response) => {
   var messageText = ip.address() + " restore switch activated";
   counter++;
-  log.info({app: 'slave', phase: 'service', id: id, counter: counter, slave_ip: ip.address()}, " restore switch activated");
-  ignore_switch--;
+  log.info({app: 'slave', phase: 'probe management', slave_ip: ip.address()}, " restore switch activated");
+  if (ignore_switch == 1) {
+    ignore_switch = 0;
+  }
   response.json(messageText);
 });
 
