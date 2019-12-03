@@ -16,7 +16,7 @@ var log = bunyan.createLogger({
   });
 
 var targetPort = 8080;
-var versionIdentifier = "v1.0";
+var versionIdentifier = "v2.0";
 
 const port = targetPort;
 var counter = 0;
